@@ -14,12 +14,12 @@ class ComponentAPI extends MashapeRestAPI
 	public function __construct() {
 		parent::__construct(dirname(__FILE__));
 	}
-
+     
     /**
-     * @GET
+     * @POST
      * @Route("/sayHello/{name}")
-     * @Return("message")
-     */
+     * @Result({"message" = @ResultArray({"aa", "bb"}), "a" = {"b", "c"}, "aa", "array"})
+    */
 	public function sayHello($name) {
 		return "Hello " . $name . "!";
 	}
