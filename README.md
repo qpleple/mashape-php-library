@@ -35,7 +35,7 @@ class ComponentAPI extends MashapeRestAPI {
 }
 </pre>
 
-## ORIGINAL CODE
+## Original code
 
 from http://github.com/Mashaper/mashape-php-library
 
