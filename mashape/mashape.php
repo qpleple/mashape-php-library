@@ -28,7 +28,7 @@ require_once (dirname(__FILE__) . "/mashapeAPIError.php");
 require_once (dirname(__FILE__) . "/init/init.php");
 require_once (dirname(__FILE__) . "/methods/handler.php");
 
-abstract class MashapeRestAPI {
+abstract class BaseMashapeRestAPI {
 	private static $errors;
 	public $dirPath;
 
