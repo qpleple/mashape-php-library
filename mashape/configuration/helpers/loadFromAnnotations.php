@@ -110,13 +110,12 @@ function getAnnotatedMethods($className) {
 }
 
 function getHttpMethodFromAnnotations($annotatedMethod) {
-    $httpMethods = array("GET", "POST", "PUT", "DELETE");
+    $httpMethods = array("get", "post", "put", "delete");
 
     foreach ($httpMethods as $httpMethod) {
-        if ($annotatedMethod->hasAnnotation($httpMethod)) {
+        if ($annotatedMethod->hasAnnotation(strtoupper($httpMethod))) {
             return $httpMethod;
         }
     }
-    
     return null;
 }
