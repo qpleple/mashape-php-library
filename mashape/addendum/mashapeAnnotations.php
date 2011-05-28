@@ -1,5 +1,5 @@
 <?php
-require "annotations.php";
+require_once "annotations.php";
 
 //
 // Methods annotations
@@ -18,5 +18,4 @@ class DELETE extends Annotation { }
 class Route extends Annotation { }
 /** @Target("method") */
 class Result extends Annotation { }
-    
-?>
+class ResultArray extends Annotation { }

@@ -30,6 +30,7 @@ require_once(dirname(__FILE__) . "/../xml/xmlParser.php");
 require_once(dirname(__FILE__) . "/../xml/xmlParserUtils.php");
 require_once(dirname(__FILE__) . "/helpers/loadMethods.php");
 require_once(dirname(__FILE__) . "/helpers/loadObjects.php");
+require_once(dirname(__FILE__) . "/helpers/loadFromAnnotations.php");
 require_once(dirname(__FILE__) . "/restConfiguration.php");
 
 class RESTConfigurationLoader {
@@ -93,8 +94,16 @@ class RESTConfigurationLoader {
 	}
 	
 	private static function initFromAnnotations() {
-	    $reflection = new ReflectionAnnotatedClass('ComponentAPI');
-	    die($reflection->hasAnnotation('Test') == true ? "true" : "false");
+		// Load Methods
+		$methods = loadMethodsFromAnnotations();
+
+		// Load Objects
+		$objects = loadObjectsFromAnnotations();
+
+		$result = new RESTConfiguration();
+		$result->setMethods($methods);
+		$result->setObjects($objects);
+		return $result;
 	}
 
 	private static function getXmlDoc($path) {
