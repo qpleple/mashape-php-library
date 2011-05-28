@@ -8,7 +8,6 @@ define("CONFIGURATION_FILEPATH", "./api.xml");
 // This is the server key for your component
 define("SERVER_KEY", "the-server-key");
 
-/** @Persistent */
 class ComponentAPI extends MashapeRestAPI
 {
 	// Don't edit the constructor code
@@ -16,6 +15,11 @@ class ComponentAPI extends MashapeRestAPI
 		parent::__construct(dirname(__FILE__));
 	}
 
+    /**
+     * @GET
+     * @Route("/sayHello/{name}")
+     * @Return("message")
+     */
 	public function sayHello($name) {
 		return "Hello " . $name . "!";
 	}
