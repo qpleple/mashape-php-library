@@ -1,12 +1,8 @@
 <?php
-
 require_once("mashape/mashape.php");
 
-// The path of the XML configuration file required by Mashape:
-define("CONFIGURATION_FILEPATH", "./api.xml");
-
 // This is the server key for your component
-define("SERVER_KEY", "the-server-key");
+define("SERVER_KEY", "the-server-keya");
 
 class ComponentAPI extends MashapeRestAPI
 {
@@ -16,9 +12,9 @@ class ComponentAPI extends MashapeRestAPI
 	}
      
     /**
-     * @POST
-     * @Route("/sayHello/{name}")
-     * @Result({"message" = @ResultArray({"aa", "bb"}), "a" = {"b", "c"}, "aa", "array"})
+     * @GET
+     * @Route("/hello/{name}")
+     * @Result({"text", "author" = {"id", "email", "password"}})
     */
 	public function sayHello($name) {
 		return "Hello " . $name . "!";
