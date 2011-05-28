@@ -50,7 +50,8 @@ class RESTConfigurationLoader {
 		if (isset($_SESSION[$sessionVarName]) && empty($_SESSION[$sessionVarName]) == false) {
 			$configuration = unserialize($_SESSION[$sessionVarName]);
 		} else {
-			$configuration = self::init($path);
+			//$configuration = self::init($path);
+			$configuration = self::initFromAnnotations();
 			$_SESSION[$sessionVarName] = serialize($configuration);
 		}
 		return $configuration;
@@ -89,6 +90,11 @@ class RESTConfigurationLoader {
 		$result->setMethods($methods);
 		$result->setObjects($objects);
 		return $result;
+	}
+	
+	private static function initFromAnnotations() {
+	    $reflection = new ReflectionAnnotatedClass('ComponentAPI');
+	    die($reflection->hasAnnotation('Test') == true ? "true" : "false");
 	}
 
 	private static function getXmlDoc($path) {
