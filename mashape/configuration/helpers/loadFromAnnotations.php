@@ -14,9 +14,10 @@ define("XML_RESULT_ARRAY", "array");
 define("XML_RESULT_TYPE", "type");
 define("XML_RESULT_NAME", "name");
 
-function loadMethodsFromAnnotations() {
+function loadFromAnnotations() {
     $annotatedMethods = getAnnotatedMethods("ComponentAPI");
     $restMethods = array();
+    $restObjects = array();
     
     foreach ($annotatedMethods as $annotatedMethod) {
         
@@ -28,42 +29,67 @@ function loadMethodsFromAnnotations() {
         } else {
             $result = $annotatedMethod->getAnnotation("Result")->value;
         }
-        echo ($array == true ? "true" : "false") . "\n";
-        die(var_dump($result));
+        
+        $objectName = $annotatedMethod->name . "Object";
+        $subObjects = restObjectsFromArray($objectName, $result);
+        //var_dump($subObjects);
+        
+        foreach ($subObjects as $obj) {
+            $restObjects[] = $obj;
+        }
         
         
     	$restMethod = new RESTMethod();
 		$restMethod->setName($annotatedMethod->name);
 		$restMethod->setObject(null);
-		$restMethod->setResult("resultNameAAA");
+		$restMethod->setResult($objectName);
 		$restMethod->setArray($array);
 		$restMethod->setHttp($http);
 		$restMethod->setRoute($route);
-
-		//Save method
-		array_push($restMethods, $restMethod);
+	    $restMethods[] = $restMethod;
 	}
-	return $restMethods;
+	$result = new RESTConfiguration();
+	$result->setMethods($restMethods);
+	$result->setObjects($restObjects);
+	
+	return $result;
 }
 
 function restObjectsFromArray($className, $array) {
     $fields = array();
     $objects = array();
-    foreach ($array as $key => $value) {
+
+    foreach ($array as $key => $value) {        
         $field = new RESTField();
 		$field->setName(is_int($key) ? $value : $key);
-		$field->setObject(is_array($value) ? $key : null);
+		$field->setObject(is_array($value) || $value instanceof ResultArray ? $key : null);
 		$field->setMethod(null);
 		$field->setArray($value instanceof ResultArray ? true : false);
-		$field->setOptional(true);
+		$field->setOptional(false);
 		$fields[] = $field;
+		
+		if ($value instanceof ResultArray) {
+		    $subObjects = restObjectsFromArray($key, $value->value);
+		} elseif (!is_int($key)) {
+		    $subObjects = restObjectsFromArray($key, $value);
+		} else {
+		    $subObjects = null;
+		}
+	    
+		if (!empty($subObjects)) {
+		  foreach ($subObjects as $object) {
+		      $objects[] = $object;
+		  }
+		}
 		
     }
     
     $object = new restObject();
     $object->setClassName($className);
     $object->setFields($fields);
-    return $object;
+    $objects[] = $object;
+    
+    return $objects;
 }
 
 function loadObjectsFromAnnotations() {

@@ -94,16 +94,7 @@ class RESTConfigurationLoader {
 	}
 	
 	private static function initFromAnnotations() {
-		// Load Methods
-		$methods = loadMethodsFromAnnotations();
-
-		// Load Objects
-		$objects = loadObjectsFromAnnotations();
-
-		$result = new RESTConfiguration();
-		$result->setMethods($methods);
-		$result->setObjects($objects);
-		return $result;
+		return loadFromAnnotations();
 	}
 
 	private static function getXmlDoc($path) {
