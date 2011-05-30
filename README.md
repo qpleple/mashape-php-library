@@ -1,5 +1,9 @@
 Mashape PHP Library modified
 ============================
+Warning
+-------
+This is not ready to be used, there is a lot more work to do to make it stable, just a proof of concept.
+
 
 Annotations instead of XML
 --------------------------
