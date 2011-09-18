@@ -9,7 +9,9 @@ Annotations instead of XML
 --------------------------
 
 Declare your API and routing pattern right into your PHP code :
-<pre>
+
+```php
+<?php
 /**
  * @GET
  * @Route("/hello/{name}")
@@ -18,13 +20,15 @@ Declare your API and routing pattern right into your PHP code :
 public function sayHello($name) {
 	return "Hello " . $name . "!";
 }
-</pre>
+```
 
 Front controller
 ----------------
 
 In the original Mashape PHP Library, the front controller is `api.php` which is also the file where the user is supposed to write the API. In this version, the front controller is `index.php` and the user does not need to open or edit it. He only has to edit `api.php` which can not be more simple :
-<pre>
+
+```php
+<?php
 define("SERVER_KEY", "the-server-key");
 
 class ComponentAPI extends MashapeRestAPI {
@@ -37,7 +41,7 @@ class ComponentAPI extends MashapeRestAPI {
     	return "Hello " . $name . "!";
     }
 }
-</pre>
+```
 
 ## Original code
 
